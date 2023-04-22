@@ -1,0 +1,24 @@
+version: "3.8"
+ 
+services:
+
+  mariadb:
+    image: bitnami/mariadb:10.2
+    container_name: mariadb
+    ports:
+      - '3306:3306'
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+      MARIADB_DATABASE: db
+      MARIADB_USER: nestjs
+      MARIADB_PASSWORD: nestjs
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d/
+      - ./db:/bitnami/mariadb
+    restart: unless-stopped
+ 
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080

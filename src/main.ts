@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
-import * as grpc from '@grpc/grpc-js';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { resolve } from 'path';
+
+import { ValidationPipe } from '@nestjs/common';
+import { EnityNotFoundErrorFilter } from './validation/entity-not-found-error.filter';
+import { grpcMicroserviceOptions } from './core/grpc/grpc.config';
 
 async function bootstrap() {
   // Create a Fastify app instance
@@ -15,31 +17,13 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  // Create a gRPC microservice options object
-  const microserviceOptions: MicroserviceOptions = {
-    transport: Transport.GRPC,
-    options: {
-      url: 'localhost:5000', // Replace with your desired gRPC server address
-      package: 'app', // Replace with your package name
-      protoPath: resolve('proto/app.proto'), // Replace with the path to your proto file
-      loader: {
-        // Define how to load the proto file
-        keepCase: true,
-        enums: String,
-        defaults: true,
-        arrays: true,
-        objects: true,
-        oneofs: true,
-        //includeDirs: ['path/to/your/proto/includes'], // Replace with the path to your proto includes
-        longs: Number,
-        bytes: String,
-        json: true,
-      },
-    },
-  };
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new EnityNotFoundErrorFilter());
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   // Create a gRPC microservice
-  app.connectMicroservice(microserviceOptions);
+  app.connectMicroservice(grpcMicroserviceOptions);
 
   // Start the gRPC microservice
   await app.startAllMicroservices();
