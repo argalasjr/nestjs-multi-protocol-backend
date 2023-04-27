@@ -4,7 +4,6 @@ import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { use } from 'passport';
 
 @Injectable()
 export class AuthService {
@@ -16,10 +15,18 @@ export class AuthService {
   ) {}
 
   public getTokenForUser(user: User) {
-    return this.jwtService.sign({
-      username: user.username,
-      sub: user.id,
-    });
+    return this.jwtService.sign(
+      {
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        sub: user.id,
+      },
+      {
+        secret: process.env.JWT_SECRET,
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      },
+    );
   }
 
   public async hashPassword(password: string): Promise<string> {

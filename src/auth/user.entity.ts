@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Expose } from 'class-transformer';
 import { Attendee } from '../events/attendee.entity';
-import { Event } from '../events/event.entity';
+import { Event } from './../events/event.entity';
 import { Profile } from './profile.entity';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 

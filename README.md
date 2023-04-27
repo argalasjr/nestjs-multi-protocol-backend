@@ -24,8 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
+Cieľom tejto diplomovej práce je dôkladne preskúmať tri rôzne technológie používané pri tvorbe API rozhraní - REST, GraphQL a gRPC - a porovnať ich medzi sebou na základe ich efektivity a výkonnosti. Práca sa zameriava na vytvorenie automatizovaných testov pre každú z týchto technológií, ktoré budú slúžiť na zhromažďovanie dát o ich výkone a následnú analýzu týchto dát. Cieľom je poskytnúť porovnanie týchto technológií na základe konkrétnych metrík a vyhodnotiť ich výhody a nevýhody pre konkrétne prípady použitia. Pre zabezpečenie, že metriky a výsledky porovnania technológií REST, GraphQL a gRPC budú spoľahlivé a presné, v rámci implementácie testovacích scenárov bude použitá jednotná technológia a rovnaký programovací jazyk pre všetky tri technológie. Týmto spôsobom sa minimalizuje vplyv rozdielov v implementačných detailoch na výsledky a umožní sa porovnávanie technológií na základe ich inherentných vlastností a efektívnosti. V závere práce budú uvedené zhrnutia zistení a odporúčania pre vývojárov pri výbere najvhodnejšej technológie pre ich konkrétne potreby.
 ## Installation
 
 ```bash

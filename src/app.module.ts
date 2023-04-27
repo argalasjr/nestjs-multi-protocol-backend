@@ -1,11 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppController } from './app.controller';
-import { AppDummy } from './app.dummy';
-import { AppJapanService } from './app.japan.service';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import ormConfig from './core/config/orm.config';
@@ -26,11 +22,6 @@ import { GraphQLConfigModule } from './core/graphql/graphql.module';
       useFactory:
         process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd,
     }),
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   autoSchemaFile: true,
-    //   playground: true,
-    // }),
     GraphQLConfigModule,
     AuthModule,
     EventsModule,
@@ -38,20 +29,11 @@ import { GraphQLConfigModule } from './core/graphql/graphql.module';
   ],
   controllers: [AppController],
   providers: [
-    {
-      provide: AppService,
-      useClass: AppJapanService,
-    },
+    AppService,
     {
       provide: 'APP_NAME',
-      useValue: 'Nest Events Backend!',
+      useValue: 'Multi Protocol Events Backend!',
     },
-    {
-      provide: 'MESSAGE',
-      inject: [AppDummy],
-      useFactory: (app) => `${app.dummy()} Factory!`,
-    },
-    AppDummy,
   ],
 })
 export class AppModule {}

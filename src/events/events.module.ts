@@ -10,11 +10,13 @@ import { EventsOrganizedByUserController } from './events-organized-by-user.cont
 import { EventsController } from './events.controller';
 import { EventsResolver } from './events.resolver';
 import { EventsService } from './events.service';
+import { EventsGrpcController } from './events-grpc.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Event, Attendee])],
   controllers: [
     EventsController,
+    EventsGrpcController,
     EventAttendeesController,
     EventsOrganizedByUserController,
     CurrentUserEventAttendanceController,

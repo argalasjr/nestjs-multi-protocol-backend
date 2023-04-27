@@ -10,7 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "NODE_ENV=dev nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "start:debug": "NODE_ENV=dev nest start --debug --watch",
     "start:prod": "node dist/main",
     "start:compose": "docker compose -p 'multi-protocol-api' -f docker-compose.yml up -d",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -20,7 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "NODE_ENV=e2e jest --runInBand --config ./test/jest-e2e.json",
     "postman:generate-graphql": "deno run https://deno.land/x/graphman@v1.2.1/src/cli.ts http://localhost:3000/graphql",
-    "grpc:generate-client": "sh proto/build.sh"
+    "grpc:generate-types": "sh proto/build.sh",
+    "grpc:client": "ts-node ./proto/app-client.ts"
   },
   "dependencies": {
     "@as-integrations/fastify": "^1.3.2",
@@ -40,6 +41,7 @@
     "class-validator": "^0.14.0",
     "fastify": "^4.15.0",
     "graphql": "^16.6.0",
+    "jsonwebtoken": "^9.0.0",
     "mariadb": "^3.1.1",
     "mysql": "^2.18.1",
     "passport": "^0.6.0",

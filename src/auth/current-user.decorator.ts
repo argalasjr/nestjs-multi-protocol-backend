@@ -3,12 +3,21 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const context = GqlExecutionContext.create(ctx);
+    const graphqlContext = GqlExecutionContext.create(ctx);
 
-    if (context) {
-      return context.getContext().req.user;
+    if (graphqlContext.getContext().req) {
+      return graphqlContext.getContext().req.user;
     }
-    const request = ctx.switchToHttp().getRequest();
-    return request.user ?? null;
+
+    if (graphqlContext.getContext().request) {
+      return graphqlContext.getContext().request.user;
+    }
+
+    const httpRequest = ctx.switchToHttp().getRequest();
+    if (httpRequest.user) {
+      return httpRequest.user;
+    }
+
+    return ctx.switchToRpc().getContext().user ?? null;
   },
 );

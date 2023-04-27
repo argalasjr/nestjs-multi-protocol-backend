@@ -4,3 +4,7 @@ import { CreateEventDto } from './create-event.dto';
 
 @InputType()
 export class UpdateEventDto extends PartialType(CreateEventDto) {}
+
+export class UpdateEventDtoWithId extends PartialType(CreateEventDto) {
+  id: number;
+}

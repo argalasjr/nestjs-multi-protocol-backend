@@ -9,4 +9,6 @@ export enum WhenEventFilter {
 export class ListEvents {
   when?: WhenEventFilter = WhenEventFilter.All;
   page?: number = 1;
+  limit?: number = 2;
+  total?: boolean = false;
 }
